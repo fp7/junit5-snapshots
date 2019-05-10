@@ -1,0 +1,16 @@
+plugins {
+    id('java-library')
+}
+
+repositories {
+    jcenter()
+}
+
+
+dependencies {
+    implementation(platform('org.junit:junit-bom:5.4.1'))
+    implementation('org.junit.jupiter:junit-jupiter-api')
+
+    implementation('org.hamcrest:hamcrest-core:2.1')
+
+}
