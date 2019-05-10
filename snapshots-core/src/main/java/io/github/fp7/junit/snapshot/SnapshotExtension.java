@@ -14,8 +14,8 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
-public class SnapshotExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback,
-    ParameterResolver {
+public class SnapshotExtension
+    implements BeforeTestExecutionCallback, AfterTestExecutionCallback, ParameterResolver {
 
   private static final Namespace ns = Namespace.create("snapshots-data");
 
@@ -25,8 +25,7 @@ public class SnapshotExtension implements BeforeTestExecutionCallback, AfterTest
     return Objects.requireNonNull(snapshotPath);
   }
 
-  public SnapshotExtension(String foo) {
-  }
+  public SnapshotExtension() {}
 
   private String getName(ExtensionContext ctx) {
     var l = new ArrayList<String>();
@@ -38,16 +37,12 @@ public class SnapshotExtension implements BeforeTestExecutionCallback, AfterTest
     Collections.reverse(l);
 
     return String.join(" ", l);
-
-
-
   }
 
   @Override
   public void beforeTestExecution(ExtensionContext context) throws Exception {
 
     context.getStore(ns).put("cur", getName(context));
-
   }
 
   @Override
@@ -57,31 +52,30 @@ public class SnapshotExtension implements BeforeTestExecutionCallback, AfterTest
     snapshotPath = null;
   }
 
-
-
   @Override
-  public boolean supportsParameter(ParameterContext parameterContext,
-      ExtensionContext extensionContext) throws ParameterResolutionException {
+  public boolean supportsParameter(
+      ParameterContext parameterContext, ExtensionContext extensionContext)
+      throws ParameterResolutionException {
     return parameterContext.getParameter().getType().equals(Snapshot.class);
   }
 
   @Override
-  public Object resolveParameter(ParameterContext parameterContext,
-      ExtensionContext extensionContext) throws ParameterResolutionException {
+  public Object resolveParameter(
+      ParameterContext parameterContext, ExtensionContext extensionContext)
+      throws ParameterResolutionException {
 
     return new Snapshot("foo");
   }
 
-  public static final class Snapshot{
+  public static final class Snapshot {
     private final String snapshot;
 
     public Snapshot(String snapshot) {
       this.snapshot = snapshot;
     }
 
-    public void matches(Object target){
+    public void matches(Object target) {
       Assertions.assertEquals(snapshot, target);
-
     }
   }
 }

@@ -1,3 +1,11 @@
+plugins {
+    id 'com.github.sherter.google-java-format' version '0.8'
+}
+
+repositories {
+    jcenter()
+}
+
 subprojects { p ->
 
     p.plugins.apply('java-library')
