@@ -1,7 +1,14 @@
 package io.github.fp7.junit.snapshot;
 
+import io.github.fp7.junit.snapshot.Snapshots.SnapshotRecorder;
+import io.github.fp7.junit.snapshot.Snapshots.SnapshotVerifier;
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
@@ -14,47 +21,62 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 
 public class SnapshotExtension
     implements BeforeAllCallback,
-        BeforeTestExecutionCallback,
-        AfterTestExecutionCallback,
-        AfterAllCallback,
-        ParameterResolver {
+    BeforeTestExecutionCallback,
+    AfterTestExecutionCallback,
+    AfterAllCallback,
+    ParameterResolver {
 
   private static final Namespace SNAPSHOTS = Namespace.create("SNAPSHOTS-data");
 
-  public SnapshotExtension() {}
+  public SnapshotExtension() {
+  }
 
   @Override
-  public void beforeTestExecution(ExtensionContext context) throws Exception {}
+  public void beforeTestExecution(ExtensionContext context) throws Exception {
+  }
 
   @Override
-  public void afterTestExecution(ExtensionContext context) throws Exception {}
+  public void afterTestExecution(ExtensionContext context) throws Exception {
+  }
 
   @Override
   public boolean supportsParameter(
       ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
-    return parameterContext.getParameter().getType().equals(Snapshots.class);
+    return parameterContext.getParameter().getType().equals(SnapshotMatcher.class);
   }
 
   @Override
   public Object resolveParameter(
       ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
+    return new SnapshotMatcher(testName(extensionContext),
+        extensionContext.getStore(SNAPSHOTS).get("current", Snapshots.class));
+  }
 
-    return extensionContext.getStore(SNAPSHOTS).get("current", Snapshots.class);
+  private String testName(ExtensionContext extensionContext) {
+    return String.format("%s#%s", extensionContext.getRequiredTestClass().getName(), extensionContext.getDisplayName());
+
   }
 
   @Override
   public void afterAll(ExtensionContext context) throws Exception {
+    if (context.getExecutionException().isPresent()) {
+      return;
+    }
     context.getStore(SNAPSHOTS).get("current", Snapshots.class).finishTest();
   }
 
   @Override
   public void beforeAll(ExtensionContext context) throws Exception {
     Path file = snapshotFile(context);
-
-    Snapshots snapshots = new Snapshots(file);
-    snapshots.loadSnapshots();
+    Snapshots snapshots;
+    if (Files.exists(file)) {
+      snapshots = new SnapshotVerifier(file);
+      snapshots.loadSnapshots();
+    } else {
+      snapshots = new SnapshotRecorder(file);
+    }
 
     context.getStore(SNAPSHOTS).put("current", snapshots);
   }

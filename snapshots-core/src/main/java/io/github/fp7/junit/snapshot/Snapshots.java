@@ -4,27 +4,93 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Assertions;
 
-public final class Snapshots {
+interface Snapshots {
 
-  private final Path snapshot;
+  void loadSnapshots();
 
-  private final Map<String, List<String>> testSnapshots = new HashMap<>();
+  void matches(String testName, String snapshot);
 
-  Snapshots(Path snapshot) {
-    this.snapshot = snapshot;
+  void finishTest();
+
+  final class SnapshotVerifier implements Snapshots {
+
+    private final Path snapshot;
+
+    private int counter = 0;
+
+    private Map<String, List<String>> testSnapshots;
+
+    SnapshotVerifier(Path snapshot) {
+      this.snapshot = snapshot;
+    }
+
+    @Override
+    public void loadSnapshots() {
+      testSnapshots = Map.copyOf(Deserializer.read(this.snapshot));
+    }
+
+    @Override
+    public void matches(String testName, String snapshot) {
+      try {
+
+        Assertions
+            .assertEquals(testSnapshots.getOrDefault(testName, List.of()).get(counter), snapshot);
+      } catch (ArrayIndexOutOfBoundsException e) {
+        Assertions.fail(String.format("No snapshot for test %s with index %d", testName, counter));
+      } finally {
+        counter = counter + 1;
+      }
+    }
+
+    @Override
+    public void finishTest() {
+
+    }
   }
 
-  void loadSnapshots() {
-    System.out.println("loading snapshot");
+  final class SnapshotRecorder implements Snapshots {
+
+    private final Path snapshotPath;
+
+    private final Map<String, List<String>> testSnapshots = new HashMap<>();
+
+    SnapshotRecorder(Path snapshotPath) {
+      this.snapshotPath = snapshotPath;
+
+    }
+
+
+    @Override
+    public void loadSnapshots() {
+
+    }
+
+    @Override
+    public void matches(String testName, String snapshot) {
+      if (testSnapshots.get(testName) == null) {
+        testSnapshots.put(testName, List.of(snapshot));
+      } else {
+        testSnapshots.put(testName,
+            List.copyOf(
+                Stream.concat(testSnapshots.get(testName).stream(), Stream.of(snapshot))
+                    .collect(
+                        Collectors.toList())));
+      }
+    }
+
+    @Override
+    public void finishTest() {
+      Serializer.write(snapshotPath, testSnapshots);
+
+
+    }
   }
 
-  public void matches(Object target) {
-    Assertions.assertEquals(snapshot, target);
-  }
 
-  public void finishTest() {
-    System.out.println("Finishing snapshots");
-  }
 }
+
+
