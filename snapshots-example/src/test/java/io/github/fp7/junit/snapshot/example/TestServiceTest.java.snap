@@ -4,6 +4,12 @@ exports[`io.github.fp7.junit.snapshot.example.TestServiceTest#checkBacktickSemic
 \`;
 `;
 
+exports[`io.github.fp7.junit.snapshot.example.TestServiceTest#checkEmptyLines(SnapshotMatcher) 1`] = `
+hallo 
+
+world!
+`;
+
 exports[`io.github.fp7.junit.snapshot.example.TestServiceTest#checkAgainstFoo(SnapshotMatcher) 1`] = `
 foo
 `;

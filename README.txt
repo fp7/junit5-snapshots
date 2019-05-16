@@ -2,7 +2,6 @@ Snapshot testing with JUnit 5
 
 
 TODO
-- Comparing strings with backticks and empty lines in it
 - Serializing arbitrary objects to a comparable string format
   - most likely pretty printed json
   - Make serializer impl pluggable

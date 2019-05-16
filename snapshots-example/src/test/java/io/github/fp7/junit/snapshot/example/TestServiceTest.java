@@ -17,4 +17,9 @@ class TestServiceTest {
   void checkBacktickSemicolon(SnapshotMatcher s){
     s.matchesSnapshot("`;");
   }
+
+  @Test
+  void checkEmptyLines(SnapshotMatcher s){
+    s.matchesSnapshot("hallo \n\nworld!");
+  }
 }
