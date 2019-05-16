@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`io.github.fp7.junit.snapshot.example.TestServiceTest#checkBacktickSemicolon(SnapshotMatcher) 1`] = `
+\`;
+`;
+
 exports[`io.github.fp7.junit.snapshot.example.TestServiceTest#checkAgainstFoo(SnapshotMatcher) 1`] = `
-test
+foo
 `;

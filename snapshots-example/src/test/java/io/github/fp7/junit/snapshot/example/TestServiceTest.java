@@ -10,6 +10,11 @@ class TestServiceTest {
 
   @Test
   void checkAgainstFoo(SnapshotMatcher s) {
-    s.matchesSnapshot("test");
+    s.matchesSnapshot("foo");
+  }
+
+  @Test
+  void checkBacktickSemicolon(SnapshotMatcher s){
+    s.matchesSnapshot("`;");
   }
 }

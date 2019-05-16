@@ -20,7 +20,8 @@ interface Snapshots {
 
     private final Path snapshot;
 
-    private int counter = 0;
+    private Map<String, Integer> counters = new HashMap<>();
+
 
     private Map<String, List<String>> testSnapshots;
 
@@ -35,14 +36,13 @@ interface Snapshots {
 
     @Override
     public void matches(String testName, String snapshot) {
-      try {
+      Integer counter = counters.merge(testName, 0, (old, val) -> old + 1);
 
+      try {
         Assertions
             .assertEquals(testSnapshots.getOrDefault(testName, List.of()).get(counter), snapshot);
       } catch (ArrayIndexOutOfBoundsException e) {
         Assertions.fail(String.format("No snapshot for test %s with index %d", testName, counter));
-      } finally {
-        counter = counter + 1;
       }
     }
 

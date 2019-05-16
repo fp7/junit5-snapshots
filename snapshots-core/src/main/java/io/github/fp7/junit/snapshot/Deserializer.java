@@ -46,7 +46,7 @@ final class Deserializer {
 
         } else if (started) {
           Assertions.assertNotNull(w);
-          w.println(string);
+          w.println(string.replace("\\`", "`"));
         }
       }
 

@@ -22,7 +22,7 @@ public class Serializer {
             v.forEach(s -> {
               pw.println();
               pw.println(String.format("exports[`%s %d`] = `", k, counter.getAndIncrement()));
-              pw.println(s);
+              pw.println(s.replace("`", "\\`"));
               pw.println("`;");
             });
           }
