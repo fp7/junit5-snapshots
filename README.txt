@@ -9,6 +9,8 @@ TODO
 - JSONPath based replacements with static values (like property replacement in jest)
 - Write quick start
 - Allow updates of snapshots via Annotation (or maybe param to matchSnapshot or both)
+- Make snap target path configurable
+- What to compare when only some tests are run
 
 References
 - https://jestjs.io/docs/en/snapshot-testing
