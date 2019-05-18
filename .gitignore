@@ -2,3 +2,4 @@
 out/
 /.idea/
 build/
+snapshots-example/src/test/java/io/github/fp7/junit/snapshot/example/TestServiceTestWithoutSnapshot.java.snap
