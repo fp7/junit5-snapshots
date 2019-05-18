@@ -22,4 +22,9 @@ class TestServiceTest {
   void checkEmptyLines(SnapshotMatcher s){
     s.matchesSnapshot("hallo \n\nworld!");
   }
+
+  @Test
+  void checkBean(SnapshotMatcher s){
+    s.matchesSnapshot(new TestBean("foo", 3));
+  }
 }

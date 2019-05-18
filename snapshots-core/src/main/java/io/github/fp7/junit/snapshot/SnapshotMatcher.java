@@ -1,5 +1,8 @@
 package io.github.fp7.junit.snapshot;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class SnapshotMatcher {
 
   private final String testName;
@@ -12,6 +15,6 @@ public class SnapshotMatcher {
   }
 
   public void matchesSnapshot(Object target){
-    snapshots.matches(testName, target.toString());
+    snapshots.matches(testName, new GsonBuilder().setPrettyPrinting().create().toJson(target));
   }
 }

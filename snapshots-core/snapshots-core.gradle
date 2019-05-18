@@ -12,5 +12,6 @@ dependencies {
     implementation('org.junit.jupiter:junit-jupiter-api')
 
     implementation('org.hamcrest:hamcrest-core:2.1')
+    implementation('com.google.code.gson:gson:2.8.5')
 
 }
