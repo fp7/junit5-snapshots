@@ -1,8 +1,7 @@
-package io.github.fp7.junit.snapshot.example;
+package io.github.fp7.junit.snapshot.v1.example;
 
-import io.github.fp7.junit.snapshot.SnapshotExtension;
-import io.github.fp7.junit.snapshot.SnapshotMatcher;
-import org.junit.jupiter.api.RepeatedTest;
+import io.github.fp7.junit.snapshot.v1.SnapshotExtension;
+import io.github.fp7.junit.snapshot.v1.SnapshotMatcher;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 

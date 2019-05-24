@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TestServiceTest#checkBean(SnapshotMatcher) 1`] = `
+{
+  "foo": "foo",
+  "bar": 3
+}
+`;
+
+exports[`TestServiceTest#checkBacktickSemicolon(SnapshotMatcher) 1`] = `
+"\`;"
+`;
+
+exports[`TestServiceTest#checkEmptyLines(SnapshotMatcher) 1`] = `
+"hallo \n\nworld!"
+`;
+
+exports[`TestServiceTest#checkAgainstFoo(SnapshotMatcher) 1`] = `
+"foo"
+`;

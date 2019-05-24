@@ -1,4 +1,4 @@
-package io.github.fp7.junit.snapshot;
+package io.github.fp7.junit.snapshot.v1;
 
 import java.nio.file.Path;
 import java.util.HashMap;

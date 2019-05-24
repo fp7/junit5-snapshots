@@ -1,6 +1,5 @@
-package io.github.fp7.junit.snapshot;
+package io.github.fp7.junit.snapshot.v1;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class SnapshotMatcher {

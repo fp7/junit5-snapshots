@@ -1,14 +1,10 @@
-package io.github.fp7.junit.snapshot;
+package io.github.fp7.junit.snapshot.v1;
 
-import io.github.fp7.junit.snapshot.Snapshots.SnapshotRecorder;
-import io.github.fp7.junit.snapshot.Snapshots.SnapshotVerifier;
+import io.github.fp7.junit.snapshot.v1.Snapshots.SnapshotRecorder;
+import io.github.fp7.junit.snapshot.v1.Snapshots.SnapshotVerifier;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;

@@ -1,4 +1,4 @@
-package io.github.fp7.junit.snapshot.example;
+package io.github.fp7.junit.snapshot.v1.example;
 
 public class TestBean {
 
