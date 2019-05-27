@@ -14,17 +14,17 @@ class TestServiceTest {
   }
 
   @Test
-  void checkBacktickSemicolon(SnapshotMatcher s){
+  void checkBacktickSemicolon(SnapshotMatcher s) {
     s.matchesSnapshot("`;");
   }
 
   @Test
-  void checkEmptyLines(SnapshotMatcher s){
+  void checkEmptyLines(SnapshotMatcher s) {
     s.matchesSnapshot("hallo \n\nworld!");
   }
 
   @Test
-  void checkBean(SnapshotMatcher s){
+  void checkBean(SnapshotMatcher s) {
     s.matchesSnapshot(new TestBean("foo", 3));
   }
 }

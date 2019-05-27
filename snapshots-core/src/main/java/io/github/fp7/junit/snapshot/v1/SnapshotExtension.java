@@ -17,23 +17,20 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 
 public class SnapshotExtension
     implements BeforeAllCallback,
-    BeforeTestExecutionCallback,
-    AfterTestExecutionCallback,
-    AfterAllCallback,
-    ParameterResolver {
+        BeforeTestExecutionCallback,
+        AfterTestExecutionCallback,
+        AfterAllCallback,
+        ParameterResolver {
 
   private static final Namespace SNAPSHOTS = Namespace.create("SNAPSHOTS-data");
 
-  public SnapshotExtension() {
-  }
+  public SnapshotExtension() {}
 
   @Override
-  public void beforeTestExecution(ExtensionContext context) throws Exception {
-  }
+  public void beforeTestExecution(ExtensionContext context) throws Exception {}
 
   @Override
-  public void afterTestExecution(ExtensionContext context) throws Exception {
-  }
+  public void afterTestExecution(ExtensionContext context) throws Exception {}
 
   @Override
   public boolean supportsParameter(
@@ -46,13 +43,15 @@ public class SnapshotExtension
   public Object resolveParameter(
       ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
-    return new SnapshotMatcher(testName(extensionContext),
+    return new SnapshotMatcher(
+        testName(extensionContext),
         extensionContext.getStore(SNAPSHOTS).get("current", Snapshots.class));
   }
 
   private String testName(ExtensionContext extensionContext) {
-    return String.format("%s#%s", extensionContext.getRequiredTestClass().getName(), extensionContext.getDisplayName());
-
+    return String.format(
+        "%s#%s",
+        extensionContext.getRequiredTestClass().getName(), extensionContext.getDisplayName());
   }
 
   @Override

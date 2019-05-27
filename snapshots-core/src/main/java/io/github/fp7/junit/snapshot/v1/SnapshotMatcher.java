@@ -13,7 +13,7 @@ public class SnapshotMatcher {
     this.snapshots = snapshots;
   }
 
-  public void matchesSnapshot(Object target){
+  public void matchesSnapshot(Object target) {
     snapshots.matches(testName, new GsonBuilder().setPrettyPrinting().create().toJson(target));
   }
 }

@@ -17,23 +17,20 @@ public class Serializer {
 
       pw.println("// Jest Snapshot v1, https://goo.gl/fbAQLP");
 
-      snapshots.forEach((k, v) -> {
+      snapshots.forEach(
+          (k, v) -> {
             var counter = new AtomicInteger(1);
-            v.forEach(s -> {
-              pw.println();
-              pw.println(String.format("exports[`%s %d`] = `", k, counter.getAndIncrement()));
-              pw.println(s.replace("`", "\\`"));
-              pw.println("`;");
-            });
-          }
-      );
-
+            v.forEach(
+                s -> {
+                  pw.println();
+                  pw.println(String.format("exports[`%s %d`] = `", k, counter.getAndIncrement()));
+                  pw.println(s.replace("`", "\\`"));
+                  pw.println("`;");
+                });
+          });
 
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-
-
   }
-
 }

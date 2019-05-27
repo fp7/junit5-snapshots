@@ -22,7 +22,6 @@ interface Snapshots {
 
     private Map<String, Integer> counters = new HashMap<>();
 
-
     private Map<String, List<String>> testSnapshots;
 
     SnapshotVerifier(Path snapshot) {
@@ -39,17 +38,15 @@ interface Snapshots {
       Integer counter = counters.merge(testName, 0, (old, val) -> old + 1);
 
       try {
-        Assertions
-            .assertEquals(testSnapshots.getOrDefault(testName, List.of()).get(counter), snapshot);
+        Assertions.assertEquals(
+            testSnapshots.getOrDefault(testName, List.of()).get(counter), snapshot);
       } catch (ArrayIndexOutOfBoundsException e) {
         Assertions.fail(String.format("No snapshot for test %s with index %d", testName, counter));
       }
     }
 
     @Override
-    public void finishTest() {
-
-    }
+    public void finishTest() {}
   }
 
   final class SnapshotRecorder implements Snapshots {
@@ -60,37 +57,27 @@ interface Snapshots {
 
     SnapshotRecorder(Path snapshotPath) {
       this.snapshotPath = snapshotPath;
-
     }
-
 
     @Override
-    public void loadSnapshots() {
-
-    }
+    public void loadSnapshots() {}
 
     @Override
     public void matches(String testName, String snapshot) {
       if (testSnapshots.get(testName) == null) {
         testSnapshots.put(testName, List.of(snapshot));
       } else {
-        testSnapshots.put(testName,
+        testSnapshots.put(
+            testName,
             List.copyOf(
                 Stream.concat(testSnapshots.get(testName).stream(), Stream.of(snapshot))
-                    .collect(
-                        Collectors.toList())));
+                    .collect(Collectors.toList())));
       }
     }
 
     @Override
     public void finishTest() {
       Serializer.write(snapshotPath, testSnapshots);
-
-
     }
   }
-
-
 }
-
-

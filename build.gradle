@@ -21,6 +21,6 @@ subprojects { p ->
         implementation('org.hamcrest:hamcrest-core:2.1')
 
     }
+
+    check.dependsOn(verifyGoogleJavaFormat)
 }
-
-
