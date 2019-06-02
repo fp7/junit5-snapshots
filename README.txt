@@ -9,6 +9,7 @@ TODO
 - Allow updates of snapshots via Annotation (or maybe param to matchSnapshot or both)
 - Make snap target path configurable
 - What to compare when only some tests are run
+- Release to mvn central and/or jcenter
 
 References
 - https://jestjs.io/docs/en/snapshot-testing
